@@ -1,1 +1,196 @@
-first page
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kit & Conseils Manifestation</title>
+  <style>
+    :root {
+      --bg: #000000;
+      --card: #121212;
+      --border: #333333;
+      --text: #FFFFFF;
+      --subtext: #CCCCCC;
+      --yellow: #FFFF00;
+      --blue: #80D8FF;
+      --red: #FF5252;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.4;
+      padding: 1rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--yellow);
+      margin-bottom: 1.5rem;
+    }
+
+    h1 { font-size: 1.6rem; text-transform: uppercase; color: var(--yellow); }
+    .subtitle { color: var(--subtext); font-size: 0.95rem; margin-top: 0.3rem; }
+
+    /* Encart Secourisme */
+    .secours-card {
+      background: var(--card);
+      border: 2px solid var(--red);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .secours-card h2 { color: var(--red); font-size: 1.1rem; margin-bottom: 0.4rem; text-transform: uppercase; }
+    .secours-card p { font-size: 0.95rem; color: var(--text); }
+
+    /* Grille checklist */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (min-width: 600px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .item {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      padding: 0.8rem;
+    }
+
+    .item h3 { font-size: 1.05rem; color: var(--text); margin-bottom: 0.3rem; }
+    .item p { font-size: 0.9rem; color: var(--subtext); }
+    .alert { color: var(--yellow); font-weight: bold; }
+
+    /* Section GAV */
+    .gav-card {
+      background: var(--card);
+      border: 2px solid var(--blue);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+
+    .gav-card h2 { color: var(--blue); font-size: 1.2rem; margin-bottom: 0.8rem; text-transform: uppercase; }
+    .gav-list { display: grid; gap: 0.6rem; }
+    
+    .gav-item { display: flex; gap: 0.8rem; align-items: center; }
+    .letter {
+      background: var(--blue);
+      color: var(--bg);
+      font-weight: 900;
+      font-size: 1.2rem;
+      min-width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+    }
+    .gav-item p { font-size: 0.9rem; color: var(--subtext); }
+    .gav-item strong { color: var(--text); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Kit de Manifestation</h1>
+    <p class="subtitle">Matériel essentiel et rappels juridiques</p>
+  </header>
+
+  <main>
+    <!-- Encart Secourisme -->
+    <section class="secours-card">
+      <h2>⛑️ Secouristes / First Aid</h2>
+      <p>Si vous êtes formé aux premiers secours : aidez les blessés. Identifiez-vous clairement avec un <strong>brassard blanc à croix rouge</strong> and the <strong>même symbole sur votre casque</strong>.</p>
+    </section>
+
+    <!-- Liste du matériel -->
+    <section class="grid">
+      <article class="item">
+        <h3>🥷 Vêtements</h3>
+        <p>Amples et entièrement noirs.</p>
+      </article>
+
+      <article class="item">
+        <h3>🥽 Lunettes de piscine</h3>
+        <p>Protection étanche contre les gaz.</p>
+      </article>
+
+      <article class="item">
+        <h3>😷 Masque FFP2 ou FFP3</h3>
+        <p>FFP2 : badigeonner l'intérieur de jus de citron contre le gaz.</p>
+      </article>
+
+      <article class="item">
+        <h3>🌂 Parapluie</h3>
+        <p>Protection contre la pluie et les jets.</p>
+      </article>
+
+      <article class="item">
+        <h3>💧 Eau (Bouteille plastique)</h3>
+        <p>Pour boire et rincer. <span class="alert">Pas de gourde métal ni verre.</span></p>
+      </article>
+
+      <article class="item">
+        <h3>🧪 Sérum physiologique</h3>
+        <p>Rincer les yeux sans frotter, tête penchée sur le côté.</p>
+      </article>
+
+      <article class="item">
+        <h3>📱 Téléphone portable</h3>
+        <p>Chargé à 100 %. <span class="alert">Désactiver FaceID/Empreinte. Code PIN uniquement.</span></p>
+      </article>
+
+      <article class="item">
+        <h3>📄 Papiers d'identité</h3>
+        <p><span class="alert">Copies uniquement.</span> Ne pas prendre les originaux.</p>
+      </article>
+
+      <article class="item">
+        <h3>🏠 Justificatif de domicile</h3>
+        <p>Utile en cas de contrôle ou vérification.</p>
+      </article>
+
+      <article class="item">
+        <h3>🆘 Numéro d'urgence</h3>
+        <p>Noter sur son bras le numéro d'un proche ou d'une legal team.</p>
+      </article>
+    </section>
+
+    <!-- Mémo GAV -->
+    <section class="gav-card">
+      <h2>⚖️ Garde à vue — Mémo A.M.I.S.</h2>
+      <div class="gav-list">
+        <div class="gav-item">
+          <div class="letter">A</div>
+          <p><strong>Avocat :</strong> À demander immédiatement dès l'arrivée.</p>
+        </div>
+        <div class="gav-item">
+          <div class="letter">M</div>
+          <p><strong>Médecin :</strong> Droit à un examen médical sur demande.</p>
+        </div>
+        <div class="gav-item">
+          <div class="letter">I</div>
+          <p><strong>Informer un proche :</strong> Droit de faire prévenir sa famille/un tiers.</p>
+        </div>
+        <div class="gav-item">
+          <div class="letter">S</div>
+          <p><strong>Silence :</strong> Garder le silence jusqu'à l'entretien avec l'avocat.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
