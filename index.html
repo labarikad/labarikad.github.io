@@ -4,16 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kit & Conseils Manifestation</title>
+  <!-- Bibliothèques nécessaires pour la génération PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     :root {
       --bg: #000000;
       --card: #121212;
       --border: #333333;
       --text: #FFFFFF;
-      --subtext: #CCCCCC;
+      --subtext: #D6D6D6;
       --yellow: #FFFF00;
       --blue: #80D8FF;
       --red: #FF5252;
+      --orange: #FFAB40;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -23,174 +26,346 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.4;
-      padding: 1rem;
+      padding: 1.25rem 1rem 2.5rem;
       max-width: 800px;
       margin: 0 auto;
     }
 
     header {
       text-align: center;
-      padding-bottom: 1rem;
+      padding-bottom: 0.8rem;
       border-bottom: 2px solid var(--yellow);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
     }
 
-    h1 { font-size: 1.6rem; text-transform: uppercase; color: var(--yellow); }
-    .subtitle { color: var(--subtext); font-size: 0.95rem; margin-top: 0.3rem; }
+    h1 { font-size: 1.6rem; text-transform: uppercase; color: var(--yellow); letter-spacing: 0.5px; }
+    .subtitle { color: var(--subtext); font-size: 0.92rem; margin-top: 0.3rem; }
 
-    /* Encart Secourisme */
+    .actions { text-align: center; margin-bottom: 1.5rem; }
+    .btn-pdf {
+      background-color: var(--yellow);
+      color: #000000;
+      border: none;
+      padding: 0.75rem 1.4rem;
+      font-size: 0.95rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      text-transform: uppercase;
+      box-shadow: 0 4px 12px rgba(255, 255, 0, 0.2);
+    }
+    .btn-pdf:hover { background-color: #e6e600; }
+
+    .section-title {
+      font-size: 1.15rem;
+      text-transform: uppercase;
+      margin: 1.5rem 0 0.8rem;
+      padding-bottom: 0.3rem;
+      border-bottom: 1px solid var(--border);
+    }
+
     .secours-card {
       background: var(--card);
       border: 2px solid var(--red);
       border-radius: 8px;
-      padding: 1rem;
-      margin-bottom: 1.5rem;
+      padding: 0.9rem 1.1rem;
+      margin-bottom: 0.8rem;
     }
+    .secours-card h2 { color: var(--red); font-size: 1rem; margin-bottom: 0.3rem; text-transform: uppercase; }
 
-    .secours-card h2 { color: var(--red); font-size: 1.1rem; margin-bottom: 0.4rem; text-transform: uppercase; }
-    .secours-card p { font-size: 0.95rem; color: var(--text); }
+    .danger-card {
+      background: var(--card);
+      border: 2px solid var(--orange);
+      border-radius: 8px;
+      padding: 0.9rem 1.1rem;
+      margin-bottom: 1.2rem;
+    }
+    .danger-card h2 { color: var(--orange); font-size: 1rem; margin-bottom: 0.3rem; text-transform: uppercase; }
 
-    /* Grille checklist */
-    .grid {
+    .grid, .rights-grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 0.8rem;
-      margin-bottom: 1.5rem;
     }
 
     @media (min-width: 600px) {
-      .grid { grid-template-columns: repeat(2, 1fr); }
+      .grid, .rights-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
-    .item {
+    .item, .right-item {
       background: var(--card);
       border: 1.5px solid var(--border);
-      border-radius: 6px;
-      padding: 0.8rem;
+      border-radius: 8px;
+      padding: 0.8rem 1rem;
     }
 
-    .item h3 { font-size: 1.05rem; color: var(--text); margin-bottom: 0.3rem; }
-    .item p { font-size: 0.9rem; color: var(--subtext); }
+    .right-item { border-color: var(--blue); }
+    .item h3 { font-size: 0.95rem; color: var(--text); margin-bottom: 0.3rem; }
+    .right-item h3 { font-size: 0.95rem; color: var(--blue); margin-bottom: 0.3rem; text-transform: uppercase; }
+    .item p, .right-item p { font-size: 0.88rem; color: var(--subtext); }
     .alert { color: var(--yellow); font-weight: bold; }
 
-    /* Section GAV */
+    .legal-input {
+      width: 100%;
+      margin-top: 0.4rem;
+      padding: 0.45rem;
+      background-color: #000000;
+      color: var(--yellow);
+      border: 2px dashed var(--yellow);
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: bold;
+      text-align: center;
+      font-family: inherit;
+    }
+
     .gav-card {
       background: var(--card);
       border: 2px solid var(--blue);
       border-radius: 8px;
-      padding: 1rem;
+      padding: 1rem 1.1rem;
+      margin-top: 1.5rem;
     }
 
-    .gav-card h2 { color: var(--blue); font-size: 1.2rem; margin-bottom: 0.8rem; text-transform: uppercase; }
+    .gav-card h2 { color: var(--blue); font-size: 1.05rem; margin-bottom: 0.6rem; text-transform: uppercase; }
     .gav-list { display: grid; gap: 0.6rem; }
-    
-    .gav-item { display: flex; gap: 0.8rem; align-items: center; }
+    .gav-item { display: flex; gap: 0.8rem; align-items: flex-start; }
     .letter {
       background: var(--blue);
       color: var(--bg);
       font-weight: 900;
-      font-size: 1.2rem;
-      min-width: 32px;
-      height: 32px;
+      font-size: 1rem;
+      min-width: 28px;
+      height: 28px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 4px;
+      border-radius: 6px;
+      flex-shrink: 0;
     }
-    .gav-item p { font-size: 0.9rem; color: var(--subtext); }
+    .gav-item p { font-size: 0.88rem; color: var(--subtext); }
     .gav-item strong { color: var(--text); }
+
+    .after-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 0.9rem 1.1rem;
+      margin-top: 1.2rem;
+    }
+    .after-card h2 { color: var(--text); font-size: 1rem; margin-bottom: 0.3rem; text-transform: uppercase; }
+
+    /* STYLES APPLIQUÉS TEMPORAIREMENT POUR LE PDF */
+    body.is-exporting {
+      background: #ffffff !important;
+      color: #000000 !important;
+      padding: 0 !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+
+    body.is-exporting .actions { display: none !important; }
+
+    body.is-exporting header { border-bottom-color: #000000 !important; margin-bottom: 10px !important; }
+    body.is-exporting h1 { color: #000000 !important; font-size: 18px !important; }
+    body.is-exporting .subtitle { color: #444444 !important; font-size: 11px !important; }
+    body.is-exporting .section-title { font-size: 12px !important; border-bottom-color: #000000 !important; margin: 10px 0 6px !important; color: #000000 !important; }
+
+    body.is-exporting .secours-card, 
+    body.is-exporting .danger-card, 
+    body.is-exporting .gav-card, 
+    body.is-exporting .after-card,
+    body.is-exporting .item,
+    body.is-exporting .right-item {
+      background: #ffffff !important;
+      border: 1px solid #000000 !important;
+      color: #000000 !important;
+      padding: 6px 8px !important;
+      border-radius: 4px !important;
+      margin-bottom: 6px !important;
+      margin-top: 0 !important;
+    }
+
+    body.is-exporting .secours-card h2, 
+    body.is-exporting .danger-card h2, 
+    body.is-exporting .gav-card h2, 
+    body.is-exporting .after-card h2,
+    body.is-exporting .right-item h3,
+    body.is-exporting .item h3 {
+      color: #000000 !important;
+      font-size: 11px !important;
+      margin-bottom: 2px !important;
+    }
+
+    body.is-exporting p, body.is-exporting strong { color: #000000 !important; font-size: 10px !important; line-height: 1.2 !important; }
+    body.is-exporting .alert { color: #000000 !important; text-decoration: underline; }
+    body.is-exporting .grid, body.is-exporting .rights-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 6px !important; }
+    body.is-exporting .letter { background: #ffffff !important; color: #000000 !important; border: 1px solid #000000 !important; height: 20px !important; min-width: 20px !important; font-size: 10px !important; }
+    body.is-exporting .legal-input { background: #ffffff !important; color: #000000 !important; border: 1px solid #000000 !important; font-size: 11px !important; padding: 2px !important; margin-top: 2px !important; }
   </style>
 </head>
 <body>
 
   <header>
     <h1>Kit de Manifestation</h1>
-    <p class="subtitle">Matériel essentiel et rappels juridiques</p>
   </header>
 
-  <main>
+  <div class="actions">
+    <button class="btn-pdf" onclick="generatePDF()">📄 Télécharger le PDF</button>
+  </div>
+
+  <main id="pdf-content">
     <!-- Encart Secourisme -->
     <section class="secours-card">
       <h2>⛑️ Secouristes / First Aid</h2>
-      <p>Si vous êtes formé aux premiers secours : aidez les blessés. Identifiez-vous clairement avec un <strong>brassard blanc à croix rouge</strong> et le <strong>même symbole sur votre casque</strong>.</p>
+      <p>Si vous êtes formé : aidez les blessés. Identifiez-vous avec un <strong>brassard blanc à croix rouge</strong> et le <strong>même symbole sur votre casque</strong>.</p>
+    </section>
+
+    <!-- Encart Interdictions -->
+    <section class="danger-card">
+      <h2>🚫 À laisser absolument chez soi</h2>
+      <p><strong>Pas de lentilles de contact</strong> (le gaz brûle la cornée). Pas d'objets tranchants, outils (cutter, couteau), alcool ou stupéfiants.</p>
     </section>
 
     <!-- Liste du matériel -->
+    <h2 class="section-title">🎒 Équipement indispensable</h2>
     <section class="grid">
       <article class="item">
-        <h3>🥷 Vêtements</h3>
-        <p>Amples et entièrement noirs.</p>
+        <h3>🧥 Vêtements</h3>
+        <p>Amples, couvrants et noirs. Prévoir du rechange étanche.</p>
       </article>
 
       <article class="item">
         <h3>🥽 Lunettes de piscine</h3>
-        <p>Protection étanche contre les gaz.</p>
+        <p>Protection étanche contre les gaz lacrymogènes.</p>
       </article>
 
       <article class="item">
         <h3>😷 Masque FFP2 ou FFP3</h3>
-        <p>FFP2 : badigeonner l'intérieur de jus de citron contre le gaz.</p>
+        <p>FFP2 : badigeonner l'intérieur de citron contre le gaz.</p>
       </article>
 
       <article class="item">
         <h3>🌂 Parapluie</h3>
-        <p>Protection contre la pluie et les jets.</p>
+        <p>Protection contre la pluie, le soleil et les jets d'eau.</p>
       </article>
 
       <article class="item">
         <h3>💧 Eau (Bouteille plastique)</h3>
-        <p>Pour boire et rincer. <span class="alert">Pas de gourde métal ni verre.</span></p>
+        <p>Pour boire et rincer. <span class="alert">Pas de métal ni de verre.</span></p>
       </article>
 
       <article class="item">
         <h3>🧪 Sérum physiologique</h3>
-        <p>Rincer les yeux sans frotter, tête penchée sur le côté.</p>
+        <p>Rincer sans frotter, tête penchée. Jeter les dosettes vides.</p>
       </article>
 
       <article class="item">
         <h3>📱 Téléphone portable</h3>
-        <p>Chargé à 100 %. <span class="alert">Désactiver FaceID/Empreinte. Code PIN uniquement.</span></p>
+        <p>Chargé à 100 %. <span class="alert">Code PIN à 6+ chiffres. Désactiver FaceID/Empreinte. Éteindre si interpellation.</span></p>
       </article>
 
       <article class="item">
         <h3>📄 Papiers d'identité</h3>
-        <p><span class="alert">Copies uniquement.</span> Ne pas prendre les originaux.</p>
+        <p><span class="alert">Copies uniquement.</span> Laisser les originaux chez soi.</p>
       </article>
 
       <article class="item">
         <h3>🏠 Justificatif de domicile</h3>
-        <p>Utile en cas de contrôle ou vérification.</p>
+        <p>Copie papier ou numérique pour prouver votre adresse.</p>
       </article>
 
       <article class="item">
-        <h3>🆘 Numéro d'urgence</h3>
-        <p>Noter sur son bras le numéro d'un proche ou d'une legal team.</p>
+        <h3>🆘 Legal Team / Urgence</h3>
+        <p><span class="alert">Écrire au feutre indélébile sur le bras :</span></p>
+        <input type="tel" id="legalNumber" class="legal-input" placeholder=" " aria-label="Numéro de la Legal Team">
+      </article>
+    </section>
+
+    <!-- Droits juridiques -->
+    <h2 class="section-title">⚖️ Vos droits en rue</h2>
+    <section class="rights-grid">
+      <article class="right-item">
+        <h3>📱 Code du téléphone</h3>
+        <p>Sans l'accord direct d'un juge, la police ne peut pas vous forcer à donner votre code en cas de simple contrôle. Restez calme et refusez poliment. Lors d'une GAV le refus constitue une infraction dans le Code pénal.</p>
+      </article>
+
+      <article class="right-item">
+        <h3>🎥 Filmer la police</h3>
+        <p>C'est un droit strict. Les policiers ne peuvent ni vous arracher votre téléphone ni vous forcer à effacer vos images.</p>
+      </article>
+
+      <article class="right-item">
+        <h3>📝 Signature d'un PV</h3>
+        <p>Rien ne vous oblige à signer. Ne signez jamais un document que vous n'avez pas lu ou avec lequel vous êtes en désaccord.</p>
+      </article>
+
+      <article class="right-item">
+        <h3>🎒 Fouille de sac</h3>
+        <p>Sans décision d'un Officier de Police Judiciaire ou réquisition du procureur, la fouille nécessite votre consentement.</p>
       </article>
     </section>
 
     <!-- Mémo GAV -->
     <section class="gav-card">
-      <h2>⚖️ Garde à vue — Mémo A.M.I.S.</h2>
+      <h2>🚨 Garde à vue — Mémo A.M.I.S.</h2>
       <div class="gav-list">
         <div class="gav-item">
           <div class="letter">A</div>
-          <p><strong>Avocat :</strong> À demander immédiatement dès l'arrivée.</p>
+          <p><strong>Avocat :</strong> À demander immédiatement dès l'arrivée en GAV.</p>
         </div>
         <div class="gav-item">
           <div class="letter">M</div>
-          <p><strong>Médecin :</strong> Droit à un examen médical sur demande.</p>
+          <p><strong>Médecin :</strong> Droit d'exiger un examen médical dès le début.</p>
         </div>
         <div class="gav-item">
           <div class="letter">I</div>
-          <p><strong>Informer un proche :</strong> Droit de faire prévenir sa famille/un tiers.</p>
+          <p><strong>Informer un proche :</strong> Droit de faire prévenir sa famille ou un tiers.</p>
         </div>
         <div class="gav-item">
           <div class="letter">S</div>
-          <p><strong>Silence :</strong> Garder le silence jusqu'à l'entretien avec l'avocat.</p>
+          <p><strong>Silence :</strong> Garder le silence absolu. Ne répondez aux questions qu'en présence de votre avocat.</p>
         </div>
       </div>
     </section>
+
+    <!-- Encart Retour de manif -->
+    <section class="after-card">
+      <h2>🚿 Au retour de manifestation</h2>
+      <p>Douche à l'<strong>EAU FROIDE</strong> (l'eau chaude fixe les gaz). Laver la tenue séparément.</p>
+    </section>
   </main>
+
+  <script>
+    // Sauvegarde locale du numéro
+    const input = document.getElementById('legalNumber');
+    input.value = localStorage.getItem('legalNumber') || '';
+    input.addEventListener('input', () => localStorage.setItem('legalNumber', input.value));
+
+    // Génération directe sans masquage
+    function generatePDF() {
+      // 1. Activer le style d'impression
+      document.body.classList.add('is-exporting');
+
+      const element = document.body;
+
+      const opt = {
+        margin:       [8, 8, 8, 8],
+        filename:     'Kit_et_Conseils_Manifestation.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, scrollY: 0 },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      // 2. Générer le PDF et rétablir le style initial
+      html2pdf().set(opt).from(element).save().then(() => {
+        document.body.classList.remove('is-exporting');
+      }).catch(err => {
+        console.error('Erreur de génération PDF :', err);
+        document.body.classList.remove('is-exporting');
+      });
+    }
+  </script>
 
 </body>
 </html>
